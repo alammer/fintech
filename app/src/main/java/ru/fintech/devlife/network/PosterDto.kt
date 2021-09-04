@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DevLifesResponse(
+data class DevLifeResponse(
     @SerialName("result")
-    val responseMoviesList: List<PosterDto> = emptyList(),
+    val responsePosterList: List<PosterDto> = emptyList(),
 )
 
 @Serializable

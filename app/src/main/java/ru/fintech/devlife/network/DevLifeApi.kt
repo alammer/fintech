@@ -29,7 +29,7 @@ interface DevLifeApi {
         @Path("category") category: String,
         @Path("page") page_id: Int,
         @Query("json") json: String = "true"
-    ): Response<PosterDto>
+    ): Response<DevLifeResponse?>
 }
 
 object DevLifeService {

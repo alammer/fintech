@@ -21,6 +21,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initViews()
+
+        viewModel.posterList.observe(this, {
+            Log.i("fetchPost", "MainActivity observer called: ${it.toString()}")
+        })
     }
 
     private fun initViews() {
