@@ -3,8 +3,6 @@
 
     <style name="ThemeOverlay.Button.White" parent="">
         <item name="colorPrimary">@android:color/white</item>
-        <item name="buttonStyle">@style/Button</item>
-
     </style>
 
 </resources>
