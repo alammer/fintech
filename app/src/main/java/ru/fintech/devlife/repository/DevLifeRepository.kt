@@ -8,6 +8,7 @@ import ru.fintech.devlife.database.PosterDataBase
 import ru.fintech.devlife.database.PosterLocal
 import ru.fintech.devlife.network.DevLifeService
 import ru.fintech.devlife.network.toLocalModel
+import ru.fintech.devlife.util.DataStatus
 
 @ExperimentalSerializationApi
 class DevLifeRepository {
@@ -16,19 +17,17 @@ class DevLifeRepository {
 
     private val dataDao = PosterDataBase.instance.posterDataDao
 
-    suspend fun getPostersByCategory(category: String = "latest"): List<PosterLocal>? = withContext(Dispatchers.IO) {
+    suspend fun getPostersByCategory(category: String = "latest"): DataStatus = withContext(Dispatchers.IO) {
         var localPosters = dataDao.getPostersByCategory(category)
         if (localPosters.isNullOrEmpty()) {
             fetchNewPosters(category, 0)
-            localPosters = dataDao.getPostersByCategory(category)
         }
-        localPosters
+        else DataStatus.Success(localPosters)
     }
 
-    private suspend fun fetchNewPosters(category: String, page: Int) {
-        try {
+    suspend fun fetchNewPosters(category: String, page: Int): DataStatus {
+        return try {
             val responsePosters = networkAPI.getPosters(category, page)
-
             if (responsePosters.isSuccessful) {
                 val newPosters = responsePosters.body()?.responsePosterList
                 if (!newPosters.isNullOrEmpty()) {
@@ -36,13 +35,12 @@ class DevLifeRepository {
                         dataDao.insertPosters(newPosters)
                     }
                 }
+                DataStatus.Success(dataDao.getPostersByCategory(category))
             } else {
-                responsePosters.errorBody()?.let {
-                    Log.i("fetchNewPosters", "errorBody: ${responsePosters.code()}")
-                }
+               DataStatus.Error(responsePosters.errorBody()?.toString() ?: "Uknown server error")
             }
         } catch (e: Exception) {
-            Log.i("fetchNewPosters", "Exception -  ${e.message}")
+            DataStatus.Failure(e.message ?: "Uknown network exception")
         }
     }
 }

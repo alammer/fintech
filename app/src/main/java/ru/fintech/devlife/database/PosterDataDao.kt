@@ -9,10 +9,10 @@ import androidx.room.Query
 interface PosterDataDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPosters(posterLocals: List<PosterLocal>)
+    suspend fun insertPosters(posterLocals: List<PosterLocal>)
 
     @Query("SELECT * FROM posters WHERE category = :category")
-    fun getPostersByCategory(category: String): List<PosterLocal>?
+    suspend fun getPostersByCategory(category: String): List<PosterLocal>?
 
     @Query("DELETE FROM posters")
     fun clearPosters()
