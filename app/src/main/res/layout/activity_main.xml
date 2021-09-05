@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:padding="@dimen/main_layout_padding"
     tools:context=".ui.MainActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,17 +19,17 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Последние" />
+            android:text="@string/tab_item_0_text" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Лучшие" />
+            android:text="@string/tab_item_1_text" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Горячие" />
+            android:text="@string/tab_item_2_text" />
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -36,7 +37,7 @@
         android:id="@+id/imgPoster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/imageview_margin_top"
         android:adjustViewBounds="true"
         app:layout_constraintTop_toBottomOf="@id/tabView"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,19 +45,13 @@
         app:layout_constraintBottom_toTopOf="@id/btnPrev"
         tools:src="@tools:sample/avatars"/>
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@id/imgPoster"
-        app:constraint_referenced_ids="imgPoster">
-    </androidx.constraintlayout.widget.Barrier>
-
     <TextView
+        android:id="@+id/tvDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DESCRIPTION"
+        android:textColor="@color/white"
+        android:textSize="@dimen/description_text_size"
+        android:layout_marginBottom="@dimen/textview_margin_bottom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/imgPoster"/>
@@ -64,13 +59,12 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPrev"
         android:theme="@style/ThemeOverlay.Button.White"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/button_margin_top"
+        android:layout_marginBottom="@dimen/button_margin_bottom"
         app:icon="@drawable/ic_back"
         app:iconTint="@null"
-        app:iconSize="24dp"
         app:iconGravity="textStart"
         android:padding="0dp"
         app:iconPadding="0dp"
@@ -79,7 +73,6 @@
         android:insetRight="0dp"
         android:insetBottom="0dp"
         app:shapeAppearanceOverlay="@style/ButtonShape"
-        app:layout_constraintTop_toBottomOf="@id/imgPoster"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnNext" />
@@ -87,13 +80,12 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNext"
         android:theme="@style/ThemeOverlay.Button.White"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/button_margin_top"
+        android:layout_marginBottom="@dimen/button_margin_bottom"
         app:icon="@drawable/ic_forward"
         app:iconTint="@null"
-        app:iconSize="24dp"
         app:iconGravity="textStart"
         android:padding="0dp"
         app:iconPadding="0dp"
@@ -102,10 +94,43 @@
         android:insetRight="0dp"
         android:insetBottom="0dp"
         app:shapeAppearanceOverlay="@style/ButtonShape"
-        app:layout_constraintTop_toBottomOf="@id/imgPoster"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnPrev"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"/>
+
+    <LinearLayout
+        android:id="@+id/error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical|center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_outline_cloud_24">
+        </ImageView>
+
+        <TextView android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/error_message"
+            android:textSize="@dimen/error_text_size" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textColor="@color/purple_500"
+            android:text="@string/retry_button_text" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
