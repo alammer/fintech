@@ -1,4 +1,4 @@
-package ru.fintech.devlife
+package ru.fintech.devlife.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
+import ru.fintech.devlife.R
 import java.lang.IllegalArgumentException
 
 class MainActivity : AppCompatActivity() {

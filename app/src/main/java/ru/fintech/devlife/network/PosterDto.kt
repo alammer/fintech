@@ -2,6 +2,7 @@ package ru.fintech.devlife.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ru.fintech.devlife.database.PosterLocal
 
 @Serializable
 data class DevLifeResponse(
@@ -25,4 +26,14 @@ data class PosterDto(
 
     @SerialName("height")
     val posterHeight: String?,
+)
+
+fun PosterDto.toLocalModel(category: String) = PosterLocal(
+    index = null,
+    category,
+    posterId,
+    description,
+    posterUrl,
+    posterWidth?.toInt(),
+    posterHeight?.toInt()
 )

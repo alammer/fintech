@@ -25,7 +25,7 @@ val retrofit: Retrofit = Retrofit.Builder()
 
 interface DevLifeApi {
     @GET("{category}/{page}")
-    suspend fun getPoster(
+    suspend fun getPosters(
         @Path("category") category: String,
         @Path("page") page_id: Int,
         @Query("json") json: String = "true"
