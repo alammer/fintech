@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
 import ru.fintech.devlife.R
 import java.lang.IllegalArgumentException
@@ -14,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tabView: TabLayout
     private lateinit var btnPrevious: MaterialButton
     private lateinit var btnNext: MaterialButton
+    private lateinit var posterView: ShapeableImageView
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -24,7 +28,13 @@ class MainActivity : AppCompatActivity() {
         initViews()
 
         viewModel.posterList.observe(this, {
-            Log.i("fetchPost", "MainActivity observer called: ${it.toString()}")
+            //Log.i("fetchMain", "observe get: ${it?.get(0)?.posterUrl}")
+            Glide.with(this)
+                .load(it?.get(0)?.posterUrl)
+                //.centerCrop()
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.broken_image)
+                .into(posterView)
         })
     }
 
@@ -32,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         tabView = findViewById(R.id.tabView)
         btnPrevious = findViewById(R.id.btnPrev)
         btnNext = findViewById(R.id.btnNext)
+        posterView = findViewById(R.id.imgPoster)
 
         tabView.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
