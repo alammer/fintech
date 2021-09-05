@@ -78,7 +78,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.uiStatus.observe(this, { status ->
-            //Log.i("fetchMain", "observe get: ${it?.get(0)?.posterUrl}")
             when(status) {
                 UiStatus.START -> btnPrevious.isEnabled = false
                 UiStatus.MIDDLE -> {
@@ -131,7 +130,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel.previousPoster()
                 if (!btnNext.isEnabled) btnNext.isEnabled = true
             }
-            Log.i("MainActivity", "Function called: click on btnPrevious!!!")
         }
 
         btnNext.setOnClickListener {
@@ -139,7 +137,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel.nextPoster()
                 if (!btnPrevious.isEnabled) btnPrevious.isEnabled = true
             }
-            Log.i("MainActivity", "Function called: click on btnNext!!!")
         }
 
         btnRetry.setOnClickListener {

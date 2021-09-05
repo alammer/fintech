@@ -59,7 +59,6 @@ class MainViewModel : ViewModel() {
     }
 
     private fun getPosters(category: String = "latest") {
-        Log.i("fetchPost", "Function called: fetchPost()")
         viewModelScope.launch {
             val posters = repository.getPostersByCategory(category)
             when (posters) {
@@ -125,6 +124,7 @@ class MainViewModel : ViewModel() {
                 )
                 when (posters) {
                     is DataStatus.Success -> {
+                        currentPosterIndex++
                         acceptNewData(currentCategory, posters.data)
                         _uiStatus.postValue(UiStatus.MIDDLE)
 
